@@ -1,0 +1,9 @@
+@media screen and (max-width: 900px) {
+	div.item-list {
+		& .item-container {
+			width: 50%;
+			& .thumbnail {
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+@media screen and (max-width: 500px) {
+	div.item-list {
+		& .item-container {
+			width: auto;
+			float: none;
+			& .thumbnail {
+			}
+		}
+	}
+}
