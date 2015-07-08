@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+.env
+/.sass-cache
+/bootstrap/compiled.php
+composer.phar
+composer.lock
+.DS_Store
+/.idea
