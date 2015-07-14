@@ -5,10 +5,12 @@ window.App.SearchPlace = {
 	},
 	handler: function(){
 		$(document).on('change','#searchPlaceType', function(e){
-			console.log('handler...');
 			App.Maps.mapScriptLoaded();
 		});
-		$(document).on('mouseover','#places li a', function(e){
+		$(document).on('click', '#sort', function(e){
+			App.Maps.sortPlaces();
+		});
+		$(document).on('click','.table tr', function(e){
 
 			var $this = $(this);//self selector
 			var data  = $this.data();
@@ -17,7 +19,7 @@ window.App.SearchPlace = {
 			App.Maps.bounceMarker(data.id, true);
 		});
 
-		$(document).on('mouseout','#places li a', function(e){
+		$(document).on('mouseout','.table tr', function(e){
 			var $this = $(this);//self selector
 			var data  = $this.data();
 			//reset marker
@@ -50,6 +52,7 @@ window.App.Maps = {
 	selectedLat: 0,
 	selectedLng: 0,
 	count:0,
+	lastInfoWindow: false,
 	default: {
 		lat: 13.9490476,
 		lng: 121.1579272,
@@ -131,28 +134,7 @@ window.App.Maps = {
 		self.eventHandler();
 		
 	},
-	placeDetail: function(){
-		var request = {
-		    placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4'
-		  };
 
-		  var infowindow = new google.maps.InfoWindow();
-		  var service = new google.maps.places.PlacesService(this.map);
-
-		  service.getDetails(request, function(place, status) {
-		    if (status == google.maps.places.PlacesServiceStatus.OK) {
-		      // var marker = new google.maps.Marker({
-		      //   map: map,
-		      //   position: place.geometry.location
-		      // });
-		      // google.maps.event.addListener(marker, 'click', function() {
-		      //   infowindow.setContent(place.name);
-		      //   infowindow.open(map, this);
-		      // });
-		  		console.log(place);
-		    }
-		  });
-	},
 	getNearbyPlaces: function(){
 		var self = this;
 		var el = $('#searchPlaceType option:selected').val();
@@ -163,7 +145,7 @@ window.App.Maps = {
 		};
 		// self.placeDetail();
 		// placesList = document.getElementById('places');
-		placesList = $('#places');
+		// placesList = $('#places');
 		
 		var service = new google.maps.places.PlacesService(self.map);
 		// service.nearbySearch(request, self.searchCallback);
@@ -186,23 +168,76 @@ window.App.Maps = {
 			    }
 		  	}
 		});
+		
 	},
 
 	createMarkers: function(places){
 		var self = this;
-		var bounds = new google.maps.LatLngBounds();
+		// var bounds = new google.maps.LatLngBounds();
+		var service = new google.maps.places.PlacesService(self.map);
 		console.log(places);
-		placesList.html('');
+		// placesList.html('');
+		$('.table tbody').html('');
 		for (var i = 0, place; place = places[i]; i++) {
 			var position = place.geometry.location;
 			self.insertMarker(position, place.id, place);
-			placesList.append('<li><a href="javascript:;" data-id="'+place.id+'">'+ place.name +'</a></li>');
+			self.getDetails(place);
 		}
+		
 	},
-	
+	getDetails: function(place){
+		var self = this;
+		 var request = {
+	        reference : place.reference,
+	    };
+
+	    service = new google.maps.places.PlacesService(self.map);
+
+		service.getDetails( request, function(details, status) {//get place detail	
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				self.renderPlaces(details);
+			} 
+			else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+	            setTimeout(function() {
+	            	//if services status fail
+	                self.getDetails(place);//retry
+	            }, 500);
+	        }
+		});
+	},
+	renderPlaces: function(place){
+		var self = this;
+		// var search_entry = 
+		// '<tr data-id="'+place.id+'">'+
+  //         '<td class="place-name">'+
+  //           '<span class="label-name">'+place.name+'</span>'+
+  //           '<span class="label-address">'+place.formatted_address+'</span>'+
+  //         '</td>'+
+  //         '<td class="place-distance">1 km</td>'+
+  //       '</tr>';
+
+        var template = $('#searchEntryTemplate').html();
+        var compiled = _.template(template)({
+        	id: place.id,
+        	name: place.name,
+        	address: place.formatted_address,
+        	distance: self.computeDistance(self.currentLocation, place.geometry.location)
+        });
+
+        $('.table tbody').append(compiled);
+	},
+	sortPlaces: function(){
+		$('.table tr').sortElements(function (a, b){
+			//sort in descending order
+			// return $(a).data().distance > $(b).data().distance ? -1 : 1;
+			//sort in ascending
+			return $(a).data().distance > $(b).data().distance ? 1 : -1;
+		});
+		console.log('sorting...');
+	},
 	getInitLocation: function(lat,longtitude) {
 		var self = this;
-		if(lat,longtitude){
+		if(lat,longtitude) {
 					self.mapCenter = new google.maps.LatLng(lat, longtitude);
 					self.currentLocation = self.mapCenter;
 					self.userLocation = self.mapCenter;
@@ -215,12 +250,12 @@ window.App.Maps = {
 								clearInterval(self.initDefaultGeoInterval);
 							}
 					}, 200);
-		}else{
+		} else {
 				if (navigator.geolocation) {
 
 				self.geolocationInProgress = true;
 				navigator.geolocation.getCurrentPosition(function(position) {
-					console.log(position);
+					// console.log(position);
 					self.mapCenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 					self.currentLocation = self.mapCenter;
 					self.userLocation = self.mapCenter;
@@ -239,8 +274,6 @@ window.App.Maps = {
 				}, 200);
 			}
 		}
- 
-
 	},
 	insertMarker: function(location, id, place){
 		var self = this;
@@ -251,7 +284,7 @@ window.App.Maps = {
 				placeId: place.place_id
 			};
 
-			var infowindow = new google.maps.InfoWindow();
+			
 			var service = new google.maps.places.PlacesService(self.map);
 
 		  	var marker = new google.maps.Marker({
@@ -266,14 +299,33 @@ window.App.Maps = {
 		    	service.getDetails(request, function(place, status) {//get place detail	
 					if (status == google.maps.places.PlacesServiceStatus.OK) {
 						console.log(place);
-						infowindow.setContent(place.adr_address);
+						
+						var name 	 = '<h3>'+place.name+'</h3>',
+							addlabel = '<span><strong>Address:</strong></span>',
+							address  = '<p>'+place.adr_address+'</p>',
+							webLabel = '<span><strong>Website:</strong></span>',
+							url 	 = (_.isUndefined(place.website) ? ' N/A' : '<p><a target="_blank" href="'+place.website+'">'+place.website+'</a></p>');
+						var content  = name+addlabel+address+webLabel+url;
+						if(self.lastInfoWindow){
+							//prevent multiple infowindow open
+							self.lastInfoWindow.close();
+						}
+
+						var infowindow = new google.maps.InfoWindow({
+							content: content,
+							maxWidth: 200
+						});
+
 		    			infowindow.open(self.map, marker);
+		    			// reassign the new infowindow to be close
+		    			// when new info window opened
+		    			self.lastInfoWindow = infowindow;
 					}
 				});
 		  	});
 		} else {
 			setTimeout(function() {
-				self.insertMarker(location, id);
+				self.insertMarker(location, id, place);
 			}, 100);
 		}
 	},
@@ -291,7 +343,6 @@ window.App.Maps = {
 		self.markers[id].isBounce = on;
 
 		if (on) {
-
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			self.map.panTo(marker.getPosition());
 		} else {
@@ -308,7 +359,6 @@ window.App.Maps = {
 		self.markers = [];
 		self.mapBounds = false;
 		self.currentStores = [];
-
 	},
 
 	getLongLat: function(lat, long){
@@ -325,3 +375,55 @@ window.App.Maps = {
 $(function(){
 	App.Maps.init();
 });
+jQuery.fn.sortElements = (function(){
+
+	var sort = [].sort;
+
+	return function(comparator, getSortable) {
+
+		getSortable = getSortable || function(){return this;};
+
+		var placements = this.map(function(){
+
+			var sortElement = getSortable.call(this),
+				parentNode = sortElement.parentNode,
+
+			// Since the element itself will change position, we have
+			// to have some way of storing its original position in
+			// the DOM. The easiest way is to have a 'flag' node:
+				nextSibling = parentNode.insertBefore(
+					document.createTextNode(''),
+					sortElement.nextSibling
+				);
+
+			return function() {
+
+				if (parentNode === this) {
+					throw new Error(
+						"You can't sort elements if any one is a descendant of another."
+					);
+				}
+
+				// Insert before flag:
+				parentNode.insertBefore(this, nextSibling);
+				// Remove flag:
+				parentNode.removeChild(nextSibling);
+
+			};
+
+		});
+
+		return sort.call(this, comparator).each(function(i){
+			placements[i].call(getSortable.call(this));
+		});
+
+	};
+
+})();
+App.util = {
+	format: function(n){
+		return n.toFixed(2).replace(/./g, function(c, i, a) {
+			return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+		});
+	},
+};

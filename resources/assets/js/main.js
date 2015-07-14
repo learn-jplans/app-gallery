@@ -5,10 +5,12 @@ window.App.SearchPlace = {
 	},
 	handler: function(){
 		$(document).on('change','#searchPlaceType', function(e){
-			console.log('handler...');
 			App.Maps.mapScriptLoaded();
 		});
-		$(document).on('mouseover','#places li a', function(e){
+		$(document).on('click', '#sort', function(e){
+			App.Maps.sortPlaces();
+		});
+		$(document).on('click','.table tr', function(e){
 
 			var $this = $(this);//self selector
 			var data  = $this.data();
@@ -17,7 +19,7 @@ window.App.SearchPlace = {
 			App.Maps.bounceMarker(data.id, true);
 		});
 
-		$(document).on('mouseout','#places li a', function(e){
+		$(document).on('mouseout','.table tr', function(e){
 			var $this = $(this);//self selector
 			var data  = $this.data();
 			//reset marker

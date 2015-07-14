@@ -17,24 +17,47 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/app.css">
   </head>
   <body>
-    <div id="search-container">
-      <select id="searchPlaceType">
-        <option value="atm">ATM</option>
-        <option value="hospital">hospital</option>
-          
-          <option value="bakery">Bakery</option>
-          <option value="bank">Bank</option>
-          <option value="bar">bar</option>
-      </select>
+    
+
+    <div id="nav">
+      <div id="search-container">
+        <select id="searchPlaceType">
+          <option value="atm">ATM</option>
+          <option value="hospital">hospital</option>
+            
+            <option value="bakery">Bakery</option>
+            <option value="bank">Bank</option>
+            <option value="bar">bar</option>
+        </select>
+        <button id="sort">Sort</button>
+      </div>
+      <div class="result-container">
+        <table class="table">
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
+
     <div id="map-canvas"></div>
     
-    <div id="result-list">
+    <!-- <div id="result-list">
       <ul class="clearfix" id="places">
         
       </ul>
-    </div>
-    
+    </div> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
     <script src="/assets/js/app.js"></script>
+    <!-- template -->
+    <script type="text/template" id="searchEntryTemplate">
+    <tr data-id="<%= id %>" data-distance="<%= distance %>">
+      <td class="place-name">
+        <span class="label-name"><%= name %></span>
+        <span class="label-address"><%= address %></span>
+      </td>
+      <td class="place-distance"><%= App.util.format(distance)+' km' %></td>
+    </tr>
+    </script>
+
   </body>
 </html>

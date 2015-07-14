@@ -37,7 +37,7 @@ li:nth-child(odd) {
   width: 100%;
   margin: 5px 0 0 0;
 }
-#search-container {
+#nav {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -77,4 +77,43 @@ ul li a {
 .clearfix:after {
   clear: both;
   zoom:1;
+}
+
+.result-container {
+  background: #FFF;
+  height: 354px;
+  overflow: auto;
+  -webkit-box-shadow: -1px 0px 22px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 0px 22px -5px rgba(0,0,0,0.75);
+  box-shadow: -1px 0px 22px -5px rgba(0,0,0,0.75);
+}
+
+.table {
+  border-collapse: collapse;
+  .place-name {
+    width: 250px;
+    padding: 7px;
+    span {
+      display: block;
+    }
+    .label-address{
+      font-size: .8em;
+    }
+  }
+  .place-distance {
+    width: 55px;
+    padding: 7px;
+  }
+  tr {
+      &:hover {
+        background:#ebebeb;
+      }  
+      td {
+        cursor: pointer;
+        border-bottom: 1px solid #ebebeb;
+        padding: 0.5rem;
+        text-align: left;
+      }  
+  }
+  
 }

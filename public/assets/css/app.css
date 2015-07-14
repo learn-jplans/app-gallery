@@ -138,7 +138,7 @@ li:nth-child(odd) {
   width: 100%;
   margin: 5px 0 0 0; }
 
-#search-container {
+#nav {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -178,3 +178,31 @@ ul li a {
 .clearfix:after {
   clear: both;
   zoom: 1; }
+
+.result-container {
+  background: #FFF;
+  height: 354px;
+  overflow: auto;
+  -webkit-box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75); }
+
+.table {
+  border-collapse: collapse; }
+.table .place-name {
+  width: 250px;
+  padding: 7px; }
+.table .place-name span {
+  display: block; }
+.table .place-name .label-address {
+  font-size: .8em; }
+.table .place-distance {
+  width: 55px;
+  padding: 7px; }
+.table tr:hover {
+  background: #ebebeb; }
+.table tr td {
+  cursor: pointer;
+  border-bottom: 1px solid #ebebeb;
+  padding: 0.5rem;
+  text-align: left; }
