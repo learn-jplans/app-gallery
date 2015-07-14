@@ -184,6 +184,7 @@ li:nth-child(odd) {
   background: #FFF;
   height: 354px;
   overflow: auto;
+  width: 333px;
   -webkit-box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
@@ -191,6 +192,11 @@ li:nth-child(odd) {
 
 .select-category {
   width: 80%; }
+
+#sort {
+  padding: 7px;
+  float: right;
+  clear: right; }
 
 .table {
   border-collapse: collapse; }

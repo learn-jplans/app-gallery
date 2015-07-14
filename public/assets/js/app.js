@@ -9,9 +9,9 @@ window.App.SearchPlace = {
 		$(document).on('change','#searchPlaceType', function(e){
 			App.Maps.mapScriptLoaded();
 		});
-		// $(document).on('click', '#sort', function(e){
-		// 	App.Maps.sortPlaces();
-		// });
+		$(document).on('click', '#sort', function(e){
+			App.Maps.sortPlaces();
+		});
 		$(document).on('click','.table tr', function(e){
 
 			var $this = $(this);//self selector
@@ -31,19 +31,11 @@ window.App.SearchPlace = {
 
 	installSelect2Widget: function(){
 
-		var data = [
-		  { id: 'liquor_store', text: 'Liquor Store' },
-		  { id: 'atm', text: 'ATM' },
-		  { id: 'hospital', text: 'Hospital' },
-		  { id: 'bakery', text: 'Bakery' },
-		  { id: 'bank', text: 'Bank' },
-		  { id: 'bar', text: 'Bar' },
-		  { id: 'cafe', text: 'Cafe' },
-		  { id: 'airport', text: 'Airport' },
-		];
+		
 
 		$('#searchPlaceType').select2({
-		  data:data
+			//category.json file dir:assets/js/
+		  	data:category
 		});
 	}
 };
@@ -160,15 +152,13 @@ window.App.Maps = {
 		var el = $('#searchPlaceType option:selected').val();
 		var request = {
 			location: this.currentLocation,
-			radius: 500,
-			types: [el]
+			// radius: 500,
+			types: [el],
+			rankBy: google.maps.places.RankBy.DISTANCE,//order by distance
 		};
-		// self.placeDetail();
-		// placesList = document.getElementById('places');
-		// placesList = $('#places');
 		
 		var service = new google.maps.places.PlacesService(self.map);
-		// service.nearbySearch(request, self.searchCallback);
+
 		service.nearbySearch(request, function (results, status, pagination) {
 		  	if (status != google.maps.places.PlacesServiceStatus.OK) {
 		    	return;
@@ -450,4 +440,7 @@ App.util = {
 			return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
 		});
 	},
+	capitalize: function (text) {
+	    return text.replace(/\b\w/g , function(m){ return m.toUpperCase(); } );
+	}
 };

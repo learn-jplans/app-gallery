@@ -1,0 +1,120 @@
+category = [
+			{ id: 'airport', text: App.util.capitalize(('airport'.split('_').join(' '))) },
+			{ id: 'amusement_park', text: App.util.capitalize(('amusement_park'.split('_').join(' '))) },
+			{ id: 'aquarium', text: App.util.capitalize(('aquarium'.split('_').join(' '))) },
+			{ id: 'art_gallery', text: App.util.capitalize(('art_gallery'.split('_').join(' '))) },
+
+			{ id: 'atm', text: App.util.capitalize(('atm'.split('_').join(' '))) },
+			{ id: 'bakery', text: App.util.capitalize(('bakery'.split('_').join(' '))) },
+			{ id: 'bank', text: App.util.capitalize(('bank'.split('_').join(' '))) },
+			{ id: 'bar', text: App.util.capitalize(('bar'.split('_').join(' '))) },
+
+			{ id: 'beauty_salon', text: App.util.capitalize(('beauty_salon'.split('_').join(' '))) },
+			{ id: 'bicycle_store', text: App.util.capitalize(('bicycle_store'.split('_').join(' '))) },
+			{ id: 'book_store', text: App.util.capitalize(('book_store'.split('_').join(' '))) },
+			{ id: 'bowling_alley', text: App.util.capitalize(('bowling_alley'.split('_').join(' '))) },
+
+			{ id: 'bus_station', text: App.util.capitalize(('bus_station'.split('_').join(' '))) },
+			{ id: 'cafe', text: App.util.capitalize(('cafe'.split('_').join(' '))) },
+			{ id: 'campground', text: App.util.capitalize(('campground'.split('_').join(' '))) },
+			{ id: 'car_dealer', text: App.util.capitalize(('car_dealer'.split('_').join(' '))) },
+
+			{ id: 'car_rental', text: App.util.capitalize(('car_rental'.split('_').join(' '))) },
+			{ id: 'car_repair', text: App.util.capitalize(('car_repair'.split('_').join(' '))) },
+			{ id: 'car_wash', text: App.util.capitalize(('car_wash'.split('_').join(' '))) },
+			{ id: 'casino', text: App.util.capitalize(('casino'.split('_').join(' '))) },
+
+			{ id: 'cemetery', text: App.util.capitalize(('cemetery'.split('_').join(' '))) },
+			{ id: 'church', text: App.util.capitalize(('church'.split('_').join(' '))) },
+			{ id: 'city_hall', text: App.util.capitalize(('city_hall'.split('_').join(' '))) },
+			{ id: 'clothing_store', text: App.util.capitalize(('clothing_store'.split('_').join(' '))) },
+
+			{ id: 'convenience_store', text: App.util.capitalize(('convenience_store'.split('_').join(' '))) },
+			{ id: 'courthouse', text: App.util.capitalize(('courthouse'.split('_').join(' '))) },
+			{ id: 'dentist', text: App.util.capitalize(('dentist'.split('_').join(' '))) },
+			{ id: 'department_store', text: App.util.capitalize(('department_store'.split('_').join(' '))) },
+
+			{ id: 'doctor', text: App.util.capitalize(('doctor'.split('_').join(' '))) },
+			{ id: 'electrician', text: App.util.capitalize(('electrician'.split('_').join(' '))) },
+			{ id: 'electronics_store', text: App.util.capitalize(('electronics_store'.split('_').join(' '))) },
+			{ id: 'embassy', text: App.util.capitalize(('embassy'.split('_').join(' '))) },
+
+			{ id: 'establishment', text: App.util.capitalize(('establishment'.split('_').join(' '))) },
+			{ id: 'finance', text: App.util.capitalize(('finance'.split('_').join(' '))) },
+			{ id: 'fire_station', text: App.util.capitalize(('fire_station'.split('_').join(' '))) },
+			{ id: 'florist', text: App.util.capitalize(('florist'.split('_').join(' '))) },
+
+			{ id: 'food', text: App.util.capitalize(('food'.split('_').join(' '))) },
+			{ id: 'funeral_home', text: App.util.capitalize(('funeral_home'.split('_').join(' '))) },
+			{ id: 'furniture_store', text: App.util.capitalize(('furniture_store'.split('_').join(' '))) },
+			{ id: 'gas_station', text: App.util.capitalize(('gas_station'.split('_').join(' '))) },
+
+			{ id: 'general_contractor', text: App.util.capitalize(('general_contractor'.split('_').join(' '))) },
+			{ id: 'grocery_or_supermarket', text: App.util.capitalize(('grocery_or_supermarket'.split('_').join(' '))) },
+			{ id: 'gym', text: App.util.capitalize(('gym'.split('_').join(' '))) },
+			{ id: 'hair_care', text: App.util.capitalize(('hair_care'.split('_').join(' '))) },
+
+			{ id: 'hardware_store', text: App.util.capitalize(('hardware_store'.split('_').join(' '))) },
+			{ id: 'health', text: App.util.capitalize(('health'.split('_').join(' '))) },
+			{ id: 'hindu_temple', text: App.util.capitalize(('hindu_temple'.split('_').join(' '))) },
+			{ id: 'home_goods_store', text: App.util.capitalize(('home_goods_store'.split('_').join(' '))) },
+
+			{ id: 'hospital', text: App.util.capitalize(('hospital'.split('_').join(' '))) },
+			{ id: 'insurance_agency', text: App.util.capitalize(('insurance_agency'.split('_').join(' '))) },
+			{ id: 'jewelry_store', text: App.util.capitalize(('jewelry_store'.split('_').join(' '))) },
+			{ id: 'laundry', text: App.util.capitalize(('laundry'.split('_').join(' '))) },
+
+			{ id: 'lawyer', text: App.util.capitalize(('lawyer'.split('_').join(' '))) },
+			{ id: 'library', text: App.util.capitalize(('library'.split('_').join(' '))) },
+			{ id: 'liquor_store', text: App.util.capitalize(('liquor_store'.split('_').join(' '))) },
+			{ id: 'local_government_office', text: App.util.capitalize(('local_government_office'.split('_').join(' '))) },
+
+			{ id: 'locksmith', text: App.util.capitalize(('locksmith'.split('_').join(' '))) },
+			{ id: 'lodging', text: App.util.capitalize(('lodging'.split('_').join(' '))) },
+			{ id: 'meal_delivery', text: App.util.capitalize(('meal_delivery'.split('_').join(' '))) },
+			{ id: 'meal_takeaway', text: App.util.capitalize(('meal_takeaway'.split('_').join(' '))) },
+
+			{ id: 'mosque', text: App.util.capitalize(('mosque'.split('_').join(' '))) },
+			{ id: 'movie_rental', text: App.util.capitalize(('movie_rental'.split('_').join(' '))) },
+			{ id: 'movie_theater', text: App.util.capitalize(('movie_theater'.split('_').join(' '))) },
+			{ id: 'moving_company', text: App.util.capitalize(('moving_company'.split('_').join(' '))) },
+
+			{ id: 'museum', text: App.util.capitalize(('museum'.split('_').join(' '))) },
+			{ id: 'night_club', text: App.util.capitalize(('night_club'.split('_').join(' '))) },
+			{ id: 'painter', text: App.util.capitalize(('painter'.split('_').join(' '))) },
+			{ id: 'park', text: App.util.capitalize(('park'.split('_').join(' '))) },
+
+			{ id: 'parking', text: App.util.capitalize(('parking'.split('_').join(' '))) },
+			{ id: 'pet_store', text: App.util.capitalize(('pet_store'.split('_').join(' '))) },
+			{ id: 'pharmacy', text: App.util.capitalize(('pharmacy'.split('_').join(' '))) },
+			{ id: 'physiotherapist', text: App.util.capitalize(('physiotherapist'.split('_').join(' '))) },
+
+			{ id: 'place_of_worship', text: App.util.capitalize(('place_of_worship'.split('_').join(' '))) },
+			{ id: 'plumber', text: App.util.capitalize(('plumber'.split('_').join(' '))) },
+			{ id: 'police', text: App.util.capitalize(('police'.split('_').join(' '))) },
+			{ id: 'post_office', text: App.util.capitalize(('post_office'.split('_').join(' '))) },
+
+			{ id: 'real_estate_agency', text: App.util.capitalize(('real_estate_agency'.split('_').join(' '))) },
+			{ id: 'restaurant', text: App.util.capitalize(('restaurant'.split('_').join(' '))) },
+			{ id: 'roofing_contractor', text: App.util.capitalize(('roofing_contractor'.split('_').join(' '))) },
+			{ id: 'rv_park', text: App.util.capitalize(('rv_park'.split('_').join(' '))) },
+
+			{ id: 'school', text: App.util.capitalize(('school'.split('_').join(' '))) },
+			{ id: 'shoe_store', text: App.util.capitalize(('shoe_store'.split('_').join(' '))) },
+			{ id: 'shopping_mall', text: App.util.capitalize(('shopping_mall'.split('_').join(' '))) },
+			{ id: 'spa', text: App.util.capitalize(('spa'.split('_').join(' '))) },
+
+			{ id: 'stadium', text: App.util.capitalize(('stadium'.split('_').join(' '))) },
+			{ id: 'storage', text: App.util.capitalize(('storage'.split('_').join(' '))) },
+			{ id: 'store', text: App.util.capitalize(('store'.split('_').join(' '))) },
+			{ id: 'subway_station', text: App.util.capitalize(('subway_station'.split('_').join(' '))) },
+
+			{ id: 'synagogue', text: App.util.capitalize(('synagogue'.split('_').join(' '))) },
+			{ id: 'taxi_stand', text: App.util.capitalize(('taxi_stand'.split('_').join(' '))) },
+			{ id: 'train_station', text: App.util.capitalize(('train_station'.split('_').join(' '))) },
+			{ id: 'travel_agency', text: App.util.capitalize(('travel_agency'.split('_').join(' '))) },
+
+			{ id: 'university', text: App.util.capitalize(('university'.split('_').join(' '))) },
+			{ id: 'veterinary_care', text: App.util.capitalize(('veterinary_care'.split('_').join(' '))) },
+			{ id: 'zoo', text: App.util.capitalize(('zoo'.split('_').join(' '))) },
+		];

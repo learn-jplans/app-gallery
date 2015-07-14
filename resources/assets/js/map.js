@@ -107,15 +107,13 @@ window.App.Maps = {
 		var el = $('#searchPlaceType option:selected').val();
 		var request = {
 			location: this.currentLocation,
-			radius: 500,
-			types: [el]
+			// radius: 500,
+			types: [el],
+			rankBy: google.maps.places.RankBy.DISTANCE,//order by distance
 		};
-		// self.placeDetail();
-		// placesList = document.getElementById('places');
-		// placesList = $('#places');
 		
 		var service = new google.maps.places.PlacesService(self.map);
-		// service.nearbySearch(request, self.searchCallback);
+
 		service.nearbySearch(request, function (results, status, pagination) {
 		  	if (status != google.maps.places.PlacesServiceStatus.OK) {
 		    	return;

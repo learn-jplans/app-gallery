@@ -24,8 +24,8 @@
       <div id="search-container">
         <select id="searchPlaceType" class="select-category">
         </select>
-        
-        <!-- <button id="sort">Sort</button> -->
+
+        <button id="sort">Sort</button>
       </div>
       <div class="result-container">
         <table class="table">
@@ -46,7 +46,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
     <script src="/assets/js/app.min.js"></script>
-    
+    <script src="/assets/js/category.json"></script>
     <!-- template -->
     <script type="text/template" id="searchEntryTemplate">
     <tr data-id="<%= id %>" data-distance="<%= distance %>">
