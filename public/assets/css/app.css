@@ -142,7 +142,8 @@ li:nth-child(odd) {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 5; }
+  z-index: 5;
+  width: 333px; }
 
 #result-list {
   position: absolute;
@@ -158,12 +159,12 @@ li:nth-child(odd) {
   overflow: auto;
   white-space: nowrap; }
 
-ul li {
+#result-list ul li {
   list-style: none;
   /*float: left;*/
   display: inline-block; }
 
-ul li a {
+#result-list ul li a {
   display: block;
   padding: 30px;
   margin: 7px;
@@ -185,7 +186,11 @@ ul li a {
   overflow: auto;
   -webkit-box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
-  box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75); }
+  box-shadow: -1px 0px 22px -5px rgba(0, 0, 0, 0.75);
+  margin-top: 7px; }
+
+.select-category {
+  width: 80%; }
 
 .table {
   border-collapse: collapse; }

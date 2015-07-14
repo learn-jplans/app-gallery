@@ -2,14 +2,16 @@ window.App = window.App || {};
 window.App.SearchPlace = {
 	init: function(){
 		this.handler();
+		this.installSelect2Widget();
 	},
 	handler: function(){
+
 		$(document).on('change','#searchPlaceType', function(e){
 			App.Maps.mapScriptLoaded();
 		});
-		$(document).on('click', '#sort', function(e){
-			App.Maps.sortPlaces();
-		});
+		// $(document).on('click', '#sort', function(e){
+		// 	App.Maps.sortPlaces();
+		// });
 		$(document).on('click','.table tr', function(e){
 
 			var $this = $(this);//self selector
@@ -24,6 +26,24 @@ window.App.SearchPlace = {
 			var data  = $this.data();
 			//reset marker
 			App.Maps.bounceMarker(data.id, false);
+		});
+	},
+
+	installSelect2Widget: function(){
+
+		var data = [
+		  { id: 'liquor_store', text: 'Liquor Store' },
+		  { id: 'atm', text: 'ATM' },
+		  { id: 'hospital', text: 'Hospital' },
+		  { id: 'bakery', text: 'Bakery' },
+		  { id: 'bank', text: 'Bank' },
+		  { id: 'bar', text: 'Bar' },
+		  { id: 'cafe', text: 'Cafe' },
+		  { id: 'airport', text: 'Airport' },
+		];
+
+		$('#searchPlaceType').select2({
+		  data:data
 		});
 	}
 };
@@ -175,7 +195,7 @@ window.App.Maps = {
 		var self = this;
 		// var bounds = new google.maps.LatLngBounds();
 		var service = new google.maps.places.PlacesService(self.map);
-		console.log(places);
+		// console.log(places);
 		// placesList.html('');
 		$('.table tbody').html('');
 		for (var i = 0, place; place = places[i]; i++) {
@@ -215,7 +235,7 @@ window.App.Maps = {
   //         '</td>'+
   //         '<td class="place-distance">1 km</td>'+
   //       '</tr>';
-
+  		console.log(place);
         var template = $('#searchEntryTemplate').html();
         var compiled = _.template(template)({
         	id: place.id,
@@ -303,9 +323,13 @@ window.App.Maps = {
 						var name 	 = '<h3>'+place.name+'</h3>',
 							addlabel = '<span><strong>Address:</strong></span>',
 							address  = '<p>'+place.adr_address+'</p>',
+							phonelbl = '<span><strong>Contact #:</strong></span>',
+							phone  	 = '<p>'+(_.isUndefined(place.formatted_phone_number) ? ' N/A' : place.formatted_phone_number)+'</p>',
 							webLabel = '<span><strong>Website:</strong></span>',
-							url 	 = (_.isUndefined(place.website) ? ' N/A' : '<p><a target="_blank" href="'+place.website+'">'+place.website+'</a></p>');
-						var content  = name+addlabel+address+webLabel+url;
+							url 	 = '<p>'+(_.isUndefined(place.website) ? ' N/A' : '<a target="_blank" href="'+place.website+'">'+place.website+'</a>')+'</p>';
+
+						var content  = name+addlabel+address+phonelbl+phone+webLabel+url;
+
 						if(self.lastInfoWindow){
 							//prevent multiple infowindow open
 							self.lastInfoWindow.close();
