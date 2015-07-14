@@ -9,9 +9,11 @@ window.App.SearchPlace = {
 			App.Maps.mapScriptLoaded();
 		});
 		$(document).on('mouseover','#places li a', function(e){
+
 			var $this = $(this);//self selector
 			var data  = $this.data();
 			//go to center of a marker
+			// console.log('...:'+data);
 			App.Maps.bounceMarker(data.id, true);
 		});
 

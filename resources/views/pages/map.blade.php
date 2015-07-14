@@ -19,8 +19,9 @@
   <body>
     <div id="search-container">
       <select id="searchPlaceType">
+        <option value="atm">ATM</option>
         <option value="hospital">hospital</option>
-          <option value="atm">ATM</option>
+          
           <option value="bakery">Bakery</option>
           <option value="bank">Bank</option>
           <option value="bar">bar</option>
