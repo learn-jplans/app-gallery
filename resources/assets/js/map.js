@@ -10,6 +10,7 @@ window.App.Maps = {
 	autoComplete: false,
 	region: "PH",
 	map: false,
+	directionsDisplay: false,
 	mapCenter: false,
 	markers: {},
 	mapBounds: false,
@@ -48,6 +49,8 @@ window.App.Maps = {
 		self.loadMap( self.$mapContainer, null, function( self ) {
 			self.getInitLocation();
 			self.mapLoaded = true;
+			// console.log('done loading map...')
+			App.SearchPlace.init();
 		} );
 		
 	},
@@ -96,6 +99,8 @@ window.App.Maps = {
 
 		container.ready(function() { // make sure the container is rendered before rendering map
 			self.map = new google.maps.Map( container[0], mapOptions );
+			self.directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+			self.directionsDisplay.setMap(self.map);
 			if( typeof callback === 'function' ) { callback( self ); }
 		});
 		self.eventHandler();
@@ -107,17 +112,20 @@ window.App.Maps = {
 		var el = $('#searchPlaceType option:selected').val();
 		var request = {
 			location: this.currentLocation,
-			// radius: 500,
+			radius: 1500,
 			types: [el],
-			rankBy: google.maps.places.RankBy.DISTANCE,//order by distance
+			// rankBy: google.maps.places.RankBy.DISTANCE,//order by distance
 		};
-		
+		self.clearMarker();
 		var service = new google.maps.places.PlacesService(self.map);
-
+		$('.loader').show();
 		service.nearbySearch(request, function (results, status, pagination) {
 		  	if (status != google.maps.places.PlacesServiceStatus.OK) {
-		    	return;
+		    	setTimeout(function(){
+		    		self.getNearbyPlaces();//call self if fail
+		    	}, 500);
 		  	} else {
+		  		// console.log('OK searching places...');
 			    self.createMarkers(results);
 			    //TODO 
 			    if (pagination.hasNextPage) {
@@ -133,7 +141,6 @@ window.App.Maps = {
 			    }
 		  	}
 		});
-		
 	},
 
 	createMarkers: function(places){
@@ -141,18 +148,22 @@ window.App.Maps = {
 		// var bounds = new google.maps.LatLngBounds();
 		var service = new google.maps.places.PlacesService(self.map);
 		// console.log(places);
+
 		// placesList.html('');
 		$('.table tbody').html('');
+		
 		for (var i = 0, place; place = places[i]; i++) {
+			// console.log(place.geometry.location.lat());
+			// console.log(place.geometry.location.lng());
 			var position = place.geometry.location;
 			self.insertMarker(position, place.id, place);
 			self.getDetails(place);
 		}
-		
+		$('.loader').hide();
 	},
 	getDetails: function(place){
 		var self = this;
-		 var request = {
+		var request = {
 	        reference : place.reference,
 	    };
 
@@ -166,26 +177,18 @@ window.App.Maps = {
 	            setTimeout(function() {
 	            	//if services status fail
 	                self.getDetails(place);//retry
-	            }, 500);
+	            }, 200);
 	        }
 		});
 	},
 	renderPlaces: function(place){
 		var self = this;
-		// var search_entry = 
-		// '<tr data-id="'+place.id+'">'+
-  //         '<td class="place-name">'+
-  //           '<span class="label-name">'+place.name+'</span>'+
-  //           '<span class="label-address">'+place.formatted_address+'</span>'+
-  //         '</td>'+
-  //         '<td class="place-distance">1 km</td>'+
-  //       '</tr>';
-  		console.log(place);
         var template = $('#searchEntryTemplate').html();
         var compiled = _.template(template)({
         	id: place.id,
         	name: place.name,
         	address: place.formatted_address,
+        	position: place.geometry.location,
         	distance: self.computeDistance(self.currentLocation, place.geometry.location)
         });
 
@@ -198,7 +201,37 @@ window.App.Maps = {
 			//sort in ascending
 			return $(a).data().distance > $(b).data().distance ? 1 : -1;
 		});
-		console.log('sorting...');
+		// console.log('sorting...');
+	},
+	drawRoute: function(desLat, desLng, travelMode){
+		var self = this;
+		
+		var directionsService = new google.maps.DirectionsService();
+		
+		var start = App.Maps.currentLocation,
+			end   = App.Maps.getLatLng(desLat, desLng);
+		var _tmode = false;
+		if(travelMode === "walking"){
+			_tmode = google.maps.TravelMode.WALKING;
+		} else if(travelMode === "driving"){
+			_tmode = google.maps.TravelMode.DRIVING;
+		}
+		var request = {
+		  	origin: start,
+		  	destination: end,
+		  	// travelMode: google.maps.TravelMode.DRIVING
+		  	travelMode: _tmode
+		};
+
+		directionsService.route(request, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+			  	App.Maps.directionsDisplay.setDirections(response);
+			}
+		});
+		
+	},
+	clearRoute: function() {
+		this.directionsDisplay.setDirections({ routes: [] });
 	},
 	getInitLocation: function(lat,longtitude) {
 		var self = this;
@@ -227,7 +260,7 @@ window.App.Maps = {
 					self.map.setZoom(self.default.zoomLevel);
 					self.map.setCenter(self.mapCenter);
 					self.geolocationInProgress = false;
-					self.getNearbyPlaces();
+					self.ownMarker(self.currentLocation,231);
 				}, function(error) {
 					self.geolocationInProgress = false;
 				}, { maximumAge: 600000, timeout:10000 });
@@ -239,6 +272,15 @@ window.App.Maps = {
 				}, 200);
 			}
 		}
+	},
+	ownMarker: function(position, id){
+		var image = '/assets/images/circle-marker.png';
+		// var myLatLng = new google.maps.LatLng(-33.890542, 151.274856);
+		var ownMarker = new google.maps.Marker({
+			position: position,
+			map: this.map,
+		  	icon: image
+		});
 	},
 	insertMarker: function(location, id, place){
 		var self = this;
@@ -263,7 +305,7 @@ window.App.Maps = {
 		  	google.maps.event.addListener(marker, 'click', function() {
 		    	service.getDetails(request, function(place, status) {//get place detail	
 					if (status == google.maps.places.PlacesServiceStatus.OK) {
-						console.log(place);
+						// console.log(place);
 						
 						var name 	 = '<h3>'+place.name+'</h3>',
 							addlabel = '<span><strong>Address:</strong></span>',
@@ -295,7 +337,7 @@ window.App.Maps = {
 		} else {
 			setTimeout(function() {
 				self.insertMarker(location, id, place);
-			}, 100);
+			}, 200);
 		}
 	},
 
@@ -322,22 +364,33 @@ window.App.Maps = {
 
 	clearMarker: function(){
 		var self = this;
-		$.each(self.markers, function(idx, marker) {
-			marker.setMap(null);
+		// Object.keys(self.markers)
+		// $.each(self.markers, function(idx, marker) {
+		// 	marker.setMap(null);
+		// });
+		// var marker;
+		// for(self.markers in marker){
+		// 	console.log('removing marker...');
+		// 	marker.setMap(null);
+		// }
+		$.each(Object.keys(self.markers), function(index, marker) {
+		  	// marker.setMap(null);
+		  	self.markers[marker].setMap(null);
 		});
+
 		self.markers = [];
 		self.mapBounds = false;
 		self.currentStores = [];
 	},
 
-	getLongLat: function(lat, long){
+	getLatLng: function(lat, long){
 		return new google.maps.LatLng(lat, long);
 	},
 	computeDistance: function(longlat1, longlat2){
 		var _distance = google.maps.geometry.spherical.computeDistanceBetween(
 			longlat1, longlat2
 		);
-		return _distance / 1000;//convert meters into km
+		return _distance;
 	},
 };
 

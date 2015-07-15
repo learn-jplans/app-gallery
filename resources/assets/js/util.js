@@ -49,6 +49,9 @@ App.util = {
 			return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
 		});
 	},
+	formatDistance: function(n) {
+		return n >= 1000 ? this.format(n/1000) +' km' : this.format(n)+' m';
+	},
 	capitalize: function (text) {
 	    return text.replace(/\b\w/g , function(m){ return m.toUpperCase(); } );
 	}

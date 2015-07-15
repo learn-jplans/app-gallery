@@ -27,6 +27,13 @@
 
         <button id="sort">Sort</button>
       </div>
+      <div class="travel clearfix">
+        <ul class="clearfix">
+          <li id="walk" data-lat="0" data-lng="0"><i class="walk">W</i></li>
+          <li id="drive" data-lat="0" data-lng="0"><i class="drive">D</i></li>
+          <span class="loader"></span>
+        </ul>
+      </div>
       <div class="result-container">
         <table class="table">
           <tbody>
@@ -49,12 +56,12 @@
     <script src="/assets/js/category.json"></script>
     <!-- template -->
     <script type="text/template" id="searchEntryTemplate">
-    <tr data-id="<%= id %>" data-distance="<%= distance %>">
+    <tr data-id="<%= id %>" data-distance="<%= distance %>" data-lat="<%= position.lat() %>" data-lng="<%= position.lng() %>">
       <td class="place-name">
         <span class="label-name"><%= name %></span>
         <span class="label-address"><%= address %></span>
       </td>
-      <td class="place-distance"><%= App.util.format(distance)+' km' %></td>
+      <td class="place-distance"><%= App.util.formatDistance(distance) %></td>
     </tr>
     </script>
 
