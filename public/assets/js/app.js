@@ -5,8 +5,8 @@ window.App.SearchPlace = {
 		var self = this;
 		self.handler();
 		self.installSelect2Widget();
-		
 		App.Maps.getNearbyPlaces();
+		// self.installListJs();
 	},
 	handler: function(){
 
@@ -60,7 +60,14 @@ window.App.SearchPlace = {
 			//category.json file dir:assets/js/
 		  	data:category
 		});
-	}
+	},
+	// installListJs: function(){
+	// 	var options = {
+	// 	  valueNames: [ 'place-name','place-distance' ]
+	// 	};
+
+	// 	var userList = new List('places-list', options);
+	// }
 };
 
 /*
@@ -439,7 +446,6 @@ window.App.Maps = {
 		// 	marker.setMap(null);
 		// }
 		$.each(Object.keys(self.markers), function(index, marker) {
-		  	// marker.setMap(null);
 		  	self.markers[marker].setMap(null);
 		});
 

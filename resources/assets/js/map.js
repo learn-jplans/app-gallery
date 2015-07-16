@@ -374,7 +374,6 @@ window.App.Maps = {
 		// 	marker.setMap(null);
 		// }
 		$.each(Object.keys(self.markers), function(index, marker) {
-		  	// marker.setMap(null);
 		  	self.markers[marker].setMap(null);
 		});
 

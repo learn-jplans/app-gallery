@@ -31,12 +31,13 @@
         <ul class="clearfix">
           <li id="walk" data-lat="0" data-lng="0"><i class="walk">W</i></li>
           <li id="drive" data-lat="0" data-lng="0"><i class="drive">D</i></li>
+
           <span class="loader"></span>
         </ul>
       </div>
-      <div class="result-container">
+      <div id="places-list">
         <table class="table">
-          <tbody>
+          <tbody class="list">
           </tbody>
         </table>
       </div>
@@ -52,6 +53,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    
     <script src="/assets/js/app.min.js"></script>
     <script src="/assets/js/category.json"></script>
     <!-- template -->
@@ -64,6 +66,6 @@
       <td class="place-distance"><%= App.util.formatDistance(distance) %></td>
     </tr>
     </script>
-
+    <!--<script src="http://listjs.com/no-cdn/list.js"></script>-->
   </body>
 </html>
